@@ -25,4 +25,4 @@ jobs:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
-          tags: aryan1704-ai/repoguard-backend:latest
+          tags: aryan1704/repoguard-backend:latest
