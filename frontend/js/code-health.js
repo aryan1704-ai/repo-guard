@@ -1,4 +1,4 @@
-const API_URL = "http://https://repoguard-backend-5tde.onrender.com";
+const API_URL = "https://repoguard-backend-5tde.onrender.com";
 
 const scanId =
     localStorage.getItem("repoguard_scan_id");
