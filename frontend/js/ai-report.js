@@ -2,7 +2,7 @@
    RepoGuard - AI Security Report
    ========================================================= */
 
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = "http://https://repoguard-backend-5tde.onrender.com";
 
 const scanId = getScanId();
 
