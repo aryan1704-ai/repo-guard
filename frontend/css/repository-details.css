@@ -1,0 +1,417 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0f1117;
+    color: #e6e8ee;
+}
+
+.page {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    width: 240px;
+    min-height: 100vh;
+    background: #151820;
+    border-right: 1px solid #252936;
+    padding: 24px 14px;
+    flex-shrink: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px 28px;
+    font-size: 19px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #242936;
+    border-radius: 7px;
+    font-size: 17px;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 13px;
+    border-radius: 7px;
+    color: #a9adba;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-link span {
+    width: 20px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.nav-link:hover {
+    background: #1d212b;
+    color: #ffffff;
+}
+
+.nav-link.active {
+    background: #242936;
+    color: #ffffff;
+}
+
+.nav-heading {
+    margin: 22px 12px 7px;
+    color: #686e7d;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    padding: 32px 38px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.topbar h1 {
+    font-size: 27px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.topbar p {
+    color: #858b9a;
+    font-size: 14px;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 10px 15px;
+    border: 1px solid #303542;
+    border-radius: 7px;
+    color: #c5cad5;
+    text-decoration: none;
+    font-size: 13px;
+    background: #151820;
+}
+
+.back-button:hover {
+    background: #20242e;
+    color: #ffffff;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.error-message {
+    background: #351d21;
+    border: 1px solid #633139;
+    color: #ed929c;
+    padding: 13px 16px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+
+/* =========================
+   REPOSITORY CARD
+========================= */
+
+.repository-card {
+    background: #151820;
+    border: 1px solid #252936;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.repository-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 25px;
+}
+
+.repository-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: #242936;
+    border: 1px solid #343a49;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.repository-title {
+    min-width: 0;
+}
+
+.repository-title h2 {
+    font-size: 21px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #ffffff;
+    word-break: break-word;
+}
+
+.repository-title p {
+    color: #858b9a;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.repository-link-container {
+    border-top: 1px solid #252936;
+    padding: 16px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.repository-link-container span {
+    color: #777e8e;
+    font-size: 12px;
+}
+
+.repository-link-container a {
+    color: #6f91ed;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.repository-link-container a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   DETAILS SECTION
+========================= */
+
+.details-section {
+    margin-bottom: 25px;
+}
+
+.details-section h2,
+.url-section h2 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.detail-card {
+    background: #151820;
+    border: 1px solid #252936;
+    border-radius: 9px;
+    padding: 19px;
+    min-height: 90px;
+}
+
+.detail-card:hover {
+    border-color: #343a49;
+}
+
+.detail-label {
+    color: #777e8e;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 11px;
+}
+
+.detail-value {
+    color: #e4e7ed;
+    font-size: 16px;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+
+/* =========================
+   URL SECTION
+========================= */
+
+.url-section {
+    margin-bottom: 30px;
+}
+
+.url-box {
+    background: #151820;
+    border: 1px solid #252936;
+    border-radius: 9px;
+    padding: 17px 19px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.url-box span {
+    color: #9da2ae;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.url-box a {
+    color: #6f91ed;
+    text-decoration: none;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.url-box a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1000px) {
+
+    .sidebar {
+        width: 210px;
+    }
+
+    .main-content {
+        padding: 28px 25px;
+    }
+
+    .details-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        width: 64px;
+        padding: 18px 8px;
+    }
+
+    .logo {
+        justify-content: center;
+        padding: 0 0 25px;
+    }
+
+    .logo span:last-child {
+        display: none;
+    }
+
+    .nav-link {
+        justify-content: center;
+        padding: 12px 5px;
+        font-size: 0;
+    }
+
+    .nav-link span {
+        font-size: 16px;
+    }
+
+    .nav-heading {
+        display: none;
+    }
+
+    .main-content {
+        padding: 22px 15px;
+    }
+
+    .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .topbar h1 {
+        font-size: 23px;
+    }
+
+    .back-button {
+        font-size: 12px;
+    }
+
+    .repository-header {
+        padding: 20px;
+    }
+
+    .repository-title h2 {
+        font-size: 18px;
+    }
+
+    .repository-link-container {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 15px 20px;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .url-box {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .url-box span {
+        width: 100%;
+    }
+}

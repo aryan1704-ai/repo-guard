@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RepoGuard Dashboard</title>
+
+    <link rel="icon" type="image/png" href="assets/repoguard-logo.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+
+    <link rel="stylesheet" href="css/scan-history.css">
+</head>
+
+<body>
+
+    <div class="page">
+
+        <aside class="sidebar">
+
+            <div class="logo">
+                <img src="assets/repoguard-logo.png" alt="RepoGuard">
+                <span>RepoGuard</span>
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html" class="nav-link">
+                    <span>▦</span>
+                    Dashboard
+                </a>
+
+                <a href="new-scan.html" class="nav-link">
+                    <span>＋</span>
+                    New Scan
+                </a>
+
+                <a href="scan-history.html" class="nav-link active">
+                    <span>◷</span>
+                    Scan History
+                </a>
+
+                <p class="nav-heading">ANALYSIS</p>
+
+                <a href="scan-results.html" class="nav-link">
+                    <span>🛡</span>
+                    Security
+                </a>
+
+                <a href="dependencies.html" class="nav-link">
+                    <span>📦</span>
+                    Dependencies
+                </a>
+
+                <a href="secrets.html" class="nav-link">
+                    <span>🔑</span>
+                    Secrets
+                </a>
+
+                <a href="cicd.html" class="nav-link">
+                    <span>⚙</span>
+                    CI/CD
+                </a>
+
+                <a href="code-health.html" class="nav-link">
+                    <span>⌘</span>
+                    Code Health
+                </a>
+
+                <p class="nav-heading">REPORTS</p>
+
+                <a href="ai-report.html" class="nav-link">
+                    <span>✦</span>
+                    AI Report
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+                    <h1>Scan History</h1>
+                    <p>View your previous repository security scans</p>
+                </div>
+
+                <button id="newScanButton">
+                    + New Scan
+                </button>
+
+            </header>
+
+
+            <section class="history-panel">
+
+                <div class="history-header">
+
+                    <div>
+                        <h2>Previous Scans</h2>
+                        <p id="scanCount">Loading scans...</p>
+                    </div>
+
+                    <div class="filters">
+
+                        <input
+                            type="search"
+                            id="searchInput"
+                            placeholder="Search repository..."
+                            aria-label="Search repository"
+                        >
+
+                        <select id="statusFilter" aria-label="Filter by status">
+                            <option value="ALL">All Status</option>
+                            <option value="COMPLETED">Completed</option>
+                            <option value="RUNNING">Running</option>
+                            <option value="QUEUED">Queued</option>
+                            <option value="FAILED">Failed</option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Repository</th>
+                                <th>Status</th>
+                                <th>Overall</th>
+                                <th>Security</th>
+                                <th>Dependencies</th>
+                                <th>Health</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="historyTableBody">
+
+                            <tr>
+                                <td colspan="8">
+                                    Loading scans...
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="js/scan-history.js"></script>
+<script src="js/navigation.js"></script>
+</body>
+
+</html>

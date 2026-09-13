@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RepoGuard Dashboard</title>
+
+    <link rel="icon" type="image/png" href="assets/repoguard-logo.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RepoGuard Dashboard</title>
+
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <img src="assets/repoguard-logo.png" alt="RepoGuard">
+                <span>RepoGuard</span>
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html" class="nav-link active">
+                    <span>▦</span>
+                    Dashboard
+                </a>
+
+                <a href="new-scan.html" class="nav-link">
+                    <span>＋</span>
+                    New Scan
+                </a>
+
+                <a href="scan-history.html" class="nav-link">
+                    <span>◷</span>
+                    Scan History
+                </a>
+
+                <p class="nav-heading">ANALYSIS</p>
+
+                <a href="scan-results.html" class="nav-link">
+                    <span>🛡</span>
+                    Security
+                </a>
+
+                <a href="dependencies.html" class="nav-link">
+                    <span>📦</span>
+                    Dependencies
+                </a>
+
+                <a href="secrets.html" class="nav-link">
+                    <span>🔑</span>
+                    Secrets
+                </a>
+
+                <a href="cicd.html" class="nav-link">
+                    <span>⚙</span>
+                    CI/CD
+                </a>
+
+                <a href="code-health.html" class="nav-link">
+                    <span>⌘</span>
+                    Code Health
+                </a>
+
+                <p class="nav-heading">REPORTS</p>
+
+                <a href="ai-report.html" class="nav-link">
+                    <span>✦</span>
+                    AI Report
+                </a>
+
+            </nav>
+
+            <a href="settings.html" class="nav-link settings">
+                <span>⚙</span>
+                Settings
+            </a>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>Repository security overview</p>
+                </div>
+
+                <button id="newScanButton">
+                    + New Scan
+                </button>
+
+            </header>
+
+
+            <!-- Repository -->
+            <section class="repository">
+
+                <div>
+                    <small>CURRENT REPOSITORY</small>
+
+                    <h2 id="repositoryName">
+                        No repository selected
+                    </h2>
+
+                    <p id="repositoryUrl">
+                        Add a repository to start a security scan.
+                    </p>
+                </div>
+
+                <div class="repository-status">
+                    <span></span>
+                    Ready
+                </div>
+
+            </section>
+
+
+            <!-- Score Cards -->
+            <section class="score-cards">
+
+                <div class="card">
+
+                    <p>Overall Score</p>
+
+                    <h2>
+                        <span id="overallScore">--</span>
+                        <small>/100</small>
+                    </h2>
+
+                    <span id="riskLevel">
+                        No scan available
+                    </span>
+
+                </div>
+
+
+                <div class="card">
+
+                    <p>Security</p>
+
+                    <h2 id="securityScore">--</h2>
+
+                    <small>Security score</small>
+
+                </div>
+
+
+                <div class="card">
+
+                    <p>Dependencies</p>
+
+                    <h2 id="dependencyScore">--</h2>
+
+                    <small>Dependency score</small>
+
+                </div>
+
+
+                <div class="card">
+
+                    <p>Code Health</p>
+
+                    <h2 id="healthScore">--</h2>
+
+                    <small>Repository quality</small>
+
+                </div>
+
+            </section>
+
+
+            <!-- Dashboard Panels -->
+            <section class="content-grid">
+
+                <!-- Security Overview -->
+                <div class="panel">
+
+                    <div class="panel-title">
+                        <div>
+                            <h3>Security Overview</h3>
+                            <p>Latest security findings</p>
+                        </div>
+                    </div>
+
+                    <div class="security-overview">
+
+                        <div class="security-score">
+
+                            <strong id="securityLargeScore">
+                                --
+                            </strong>
+
+                            <span>/ 100</span>
+
+                        </div>
+
+
+                        <div class="findings">
+
+                            <div>
+                                <span>Critical</span>
+                                <strong id="criticalCount">0</strong>
+                            </div>
+
+                            <div>
+                                <span>High</span>
+                                <strong id="highCount">0</strong>
+                            </div>
+
+                            <div>
+                                <span>Medium</span>
+                                <strong id="mediumCount">0</strong>
+                            </div>
+
+                            <div>
+                                <span>Low</span>
+                                <strong id="lowCount">0</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Repository Health -->
+                <div class="panel">
+
+                    <div class="panel-title">
+
+                        <div>
+                            <h3>Repository Health</h3>
+                            <p>Basic codebase information</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="health-list">
+
+                        <div>
+                            <span>Total Files</span>
+                            <strong id="totalFiles">--</strong>
+                        </div>
+
+                        <div>
+                            <span>Code Files</span>
+                            <strong id="codeFiles">--</strong>
+                        </div>
+
+                        <div>
+                            <span>Lines of Code</span>
+                            <strong id="totalLines">--</strong>
+                        </div>
+
+                        <div>
+                            <span>Test Files</span>
+                            <strong id="testFiles">--</strong>
+                        </div>
+
+                        <div>
+                            <span>TODO / FIXME</span>
+                            <strong id="todoCount">--</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Recent Scans -->
+            <section class="panel recent-scans">
+
+                <div class="panel-title">
+
+                    <div>
+                        <h3>Recent Scans</h3>
+                        <p>Your latest repository scans</p>
+                    </div>
+
+                    <a href="#">
+                        View all
+                    </a>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Repository</th>
+                                <th>Status</th>
+                                <th>Score</th>
+                                <th>Date</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="scanTableBody">
+
+                            <tr>
+                                <td colspan="4">
+                                    No scans available yet.
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="js/dashboard.js"></script>
+
+</body>
+
+</html>

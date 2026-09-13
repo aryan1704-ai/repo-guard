@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RepoGuard Dashboard</title>
+
+    <link rel="icon" type="image/png" href="assets/repoguard-logo.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <img src="assets/repoguard-logo.png" alt="RepoGuard">
+                <span>RepoGuard</span>
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html" class="nav-link">
+                    <span>▦</span>
+                    Dashboard
+                </a>
+
+                <a href="new-scan.html" class="nav-link active">
+                    <span>＋</span>
+                    New Scan
+                </a>
+
+                <a href="scan-history.html" class="nav-link">
+                    <span>◷</span>
+                    Scan History
+                </a>
+
+                <p class="nav-heading">ANALYSIS</p>
+
+                <a href="scan-results.html" class="nav-link">
+                    <span>🛡</span>
+                    Security
+                </a>
+
+                <a href="dependencies.html" class="nav-link">
+                    <span>📦</span>
+                    Dependencies
+                </a>
+
+                <a href="secrets.html" class="nav-link">
+                    <span>🔑</span>
+                    Secrets
+                </a>
+
+                <a href="cicd.html" class="nav-link">
+                    <span>⚙</span>
+                    CI/CD
+                </a>
+
+                <a href="code-health.html" class="nav-link">
+                    <span>⌘</span>
+                    Code Health
+                </a>
+
+                <p class="nav-heading">REPORTS</p>
+
+                <a href="ai-report.html" class="nav-link">
+                    <span>✦</span>
+                    AI Report
+                </a>
+
+            </nav>
+
+            <a href="settings.html" class="nav-link settings">
+                <span>⚙</span>
+                Settings
+            </a>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+                    <h1>New Scan</h1>
+                    <p>Analyze a GitHub repository for security and code health.</p>
+                </div>
+
+            </header>
+
+
+            <!-- Scan Form -->
+            <section class="panel scan-form">
+
+                <div class="panel-title">
+
+                    <div>
+                        <h3>Repository</h3>
+                        <p>Enter the URL of a public GitHub repository.</p>
+                    </div>
+
+                </div>
+
+
+                <form id="scanForm">
+
+                    <label for="repositoryUrl">
+                        GitHub Repository URL
+                    </label>
+
+                    <input type="text" id="repositoryUrl" name="repositoryUrl"
+                        placeholder="https://github.com/username/repository">
+
+                    <p class="input-help">
+                        RepoGuard currently supports public GitHub repositories.
+                    </p>
+
+
+                    <button type="submit" id="startScanButton">
+                        Start Security Scan
+                    </button>
+
+                </form>
+
+
+                <div id="scanMessage"></div>
+
+            </section>
+
+
+            <!-- What will be analyzed -->
+            <section class="panel">
+
+                <div class="panel-title">
+
+                    <div>
+                        <h3>What RepoGuard analyzes</h3>
+                        <p>The scan checks multiple areas of the repository.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="analysis-list">
+
+                    <div>
+                        <strong>🛡 Security</strong>
+                        <span>Static security issues and risky code patterns</span>
+                    </div>
+
+                    <div>
+                        <strong>📦 Dependencies</strong>
+                        <span>Project dependencies and known vulnerabilities</span>
+                    </div>
+
+                    <div>
+                        <strong>🔑 Secrets</strong>
+                        <span>Potential exposed API keys, tokens and credentials</span>
+                    </div>
+
+                    <div>
+                        <strong>⚙ CI/CD</strong>
+                        <span>GitHub Actions workflows and permissions</span>
+                    </div>
+
+                    <div>
+                        <strong>⌘ Code Health</strong>
+                        <span>Files, code size, tests, documentation and TODOs</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="js/new-scan.js"></script>
+<script src="js/navigation.js"></script>
+</body>
+
+</html>

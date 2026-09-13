@@ -1,0 +1,598 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0d1117;
+    color: #e6edf3;
+}
+
+.dashboard {
+    min-height: 100vh;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 235px;
+    height: 100vh;
+
+    background: #111820;
+    border-right: 1px solid #252d36;
+
+    padding: 22px 14px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 5px 10px 28px;
+
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.logo img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    padding: 10px 12px;
+    margin-bottom: 3px;
+
+    color: #9aa6b2;
+    text-decoration: none;
+
+    font-size: 14px;
+
+    border-radius: 6px;
+
+    transition: background 0.2s, color 0.2s;
+}
+
+.nav-link span {
+    width: 18px;
+    text-align: center;
+}
+
+.nav-link:hover {
+    background: #19222c;
+    color: #ffffff;
+}
+
+.nav-link.active {
+    background: #1d2a39;
+    color: #ffffff;
+}
+
+.nav-heading {
+    margin: 22px 12px 7px;
+
+    color: #65717d;
+
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.settings {
+    margin-top: auto;
+}
+
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content {
+    margin-left: 235px;
+
+    padding: 30px;
+
+    min-height: 100vh;
+}
+
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 24px;
+}
+
+.topbar h1 {
+    font-size: 27px;
+    margin-bottom: 5px;
+}
+
+.topbar p {
+    color: #7f8b97;
+    font-size: 13px;
+}
+
+#newScanButton {
+    border: none;
+
+    background: #2563eb;
+    color: white;
+
+    padding: 10px 17px;
+
+    border-radius: 6px;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+#newScanButton:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================
+   REPOSITORY
+========================= */
+
+.repository {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px;
+
+    background: #111820;
+
+    border: 1px solid #252d36;
+    border-radius: 8px;
+
+    margin-bottom: 18px;
+}
+
+.repository small {
+    color: #66727e;
+
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.repository h2 {
+    margin: 7px 0;
+
+    font-size: 17px;
+}
+
+.repository p {
+    color: #788592;
+
+    font-size: 13px;
+}
+
+.repository-status {
+    color: #8995a1;
+    font-size: 13px;
+}
+
+.repository-status span {
+    display: inline-block;
+
+    width: 8px;
+    height: 8px;
+
+    margin-right: 6px;
+
+    background: #22c55e;
+
+    border-radius: 50%;
+}
+
+
+/* =========================
+   SCORE CARDS
+========================= */
+
+.score-cards {
+    display: grid;
+
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
+
+    gap: 14px;
+
+    margin-bottom: 18px;
+}
+
+.card {
+    background: #111820;
+
+    border: 1px solid #252d36;
+    border-radius: 8px;
+
+    padding: 20px;
+}
+
+.card p {
+    color: #8995a1;
+
+    font-size: 13px;
+
+    margin-bottom: 13px;
+}
+
+.card h2 {
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+.card h2 small {
+    color: #66727e;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.card > small {
+    color: #6f7c88;
+    font-size: 11px;
+}
+
+#riskLevel {
+    color: #7f8b97;
+    font-size: 12px;
+}
+
+
+/* =========================
+   CONTENT GRID
+========================= */
+
+.content-grid {
+    display: grid;
+
+    grid-template-columns: 1.35fr 1fr;
+
+    gap: 14px;
+
+    margin-bottom: 18px;
+}
+
+.panel {
+    background: #111820;
+
+    border: 1px solid #252d36;
+    border-radius: 8px;
+
+    padding: 20px;
+}
+
+.panel-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.panel-title h3 {
+    font-size: 16px;
+
+    margin-bottom: 5px;
+}
+
+.panel-title p {
+    color: #788592;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   SECURITY OVERVIEW
+========================= */
+
+.security-overview {
+    display: flex;
+    align-items: center;
+
+    gap: 55px;
+}
+
+.security-score strong {
+    font-size: 52px;
+}
+
+.security-score span {
+    color: #697684;
+}
+
+.findings {
+    flex: 1;
+}
+
+.findings div {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 9px 0;
+
+    border-bottom: 1px solid #202933;
+
+    font-size: 13px;
+}
+
+.findings div:last-child {
+    border-bottom: none;
+}
+
+.findings span {
+    color: #8995a1;
+}
+
+
+/* =========================
+   HEALTH
+========================= */
+
+.health-list div {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #202933;
+
+    font-size: 13px;
+}
+
+.health-list div:last-child {
+    border-bottom: none;
+}
+
+.health-list span {
+    color: #8995a1;
+}
+
+
+/* =========================
+   RECENT SCANS
+========================= */
+
+.recent-scans {
+    margin-bottom: 30px;
+}
+
+.panel-title a {
+    color: #6ea8fe;
+
+    text-decoration: none;
+
+    font-size: 12px;
+}
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+
+    padding: 10px;
+
+    color: #697684;
+
+    font-size: 11px;
+    font-weight: normal;
+
+    border-bottom: 1px solid #252d36;
+}
+
+td {
+    padding: 13px 10px;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #202933;
+}
+
+td[colspan] {
+    text-align: center;
+
+    color: #697684;
+
+    padding: 30px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 950px) {
+
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+    }
+
+    .score-cards {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 18px;
+    }
+
+    .topbar {
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .topbar h1 {
+        font-size: 23px;
+    }
+
+    .repository {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .score-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .security-overview {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 25px;
+    }
+}
+
+/* =========================
+   NEW SCAN
+========================= */
+
+.scan-form {
+    max-width: 750px;
+    margin-bottom: 18px;
+}
+
+.scan-form label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #c9d1d9;
+
+    font-size: 13px;
+}
+
+.scan-form input {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    background: #0d1117;
+    color: #e6edf3;
+
+    border: 1px solid #303945;
+    border-radius: 6px;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+.scan-form input:focus {
+    border-color: #2563eb;
+}
+
+.input-help {
+    margin-top: 7px;
+    margin-bottom: 18px;
+
+    color: #697684;
+
+    font-size: 11px;
+}
+
+#startScanButton {
+    border: none;
+
+    background: #2563eb;
+    color: white;
+
+    padding: 11px 18px;
+
+    border-radius: 6px;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+#startScanButton:hover {
+    background: #1d4ed8;
+}
+
+.analysis-list {
+    display: grid;
+    gap: 0;
+}
+
+.analysis-list div {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #202933;
+}
+
+.analysis-list div:last-child {
+    border-bottom: none;
+}
+
+.analysis-list strong {
+    font-size: 13px;
+    min-width: 180px;
+}
+
+.analysis-list span {
+    color: #788592;
+    font-size: 12px;
+    text-align: right;
+}
+
+#scanMessage {
+    margin-top: 15px;
+
+    font-size: 13px;
+}

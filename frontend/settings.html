@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings - RepoGuard</title>
+
+    <link rel="stylesheet" href="css/settings.css">
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <span class="logo-icon">🛡</span>
+            <span>RepoGuard</span>
+        </div>
+
+        <nav>
+
+            <a href="dashboard.html" class="nav-link">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="new-scan.html" class="nav-link">
+                <span>＋</span>
+                New Scan
+            </a>
+
+            <a href="scan-history.html" class="nav-link">
+                <span>◷</span>
+                Scan History
+            </a>
+
+            <div class="nav-heading">
+                ANALYSIS
+            </div>
+
+            <a href="scan-results.html" class="nav-link">
+                <span>◈</span>
+                Security Findings
+            </a>
+
+            <a href="dependencies.html" class="nav-link">
+                <span>◇</span>
+                Dependencies
+            </a>
+
+            <a href="secrets.html" class="nav-link">
+                <span>◆</span>
+                Secrets
+            </a>
+
+            <a href="cicd.html" class="nav-link">
+                <span>⚙</span>
+                CI/CD Security
+            </a>
+
+            <a href="code-health.html" class="nav-link">
+                <span>⌁</span>
+                Code Health
+            </a>
+
+            <a href="ai-report.html" class="nav-link">
+                <span>✦</span>
+                AI Report
+            </a>
+
+            <div class="nav-heading">
+                REPOSITORY
+            </div>
+
+            <a href="repository-details.html" class="nav-link">
+                <span>▤</span>
+                Repository Details
+            </a>
+
+            <div class="nav-heading">
+                SYSTEM
+            </div>
+
+            <a href="settings.html" class="nav-link active">
+                <span>⚙</span>
+                Settings
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Settings</h1>
+
+                <p>
+                    View RepoGuard configuration and system status.
+                </p>
+            </div>
+
+        </header>
+
+
+        <!-- =========================
+             SYSTEM STATUS
+        ========================== -->
+
+        <section class="settings-section">
+
+            <h2>System Status</h2>
+
+            <div class="settings-grid">
+
+                <div class="setting-card">
+
+                    <div class="setting-header">
+
+                        <span class="setting-icon">●</span>
+
+                        <div>
+                            <h3>Backend API</h3>
+
+                            <p>
+                                FastAPI backend connection
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="backendStatus"
+                        class="status-value status-checking">
+
+                        Checking...
+
+                    </div>
+
+                </div>
+
+
+                <div class="setting-card">
+
+                    <div class="setting-header">
+
+                        <span class="setting-icon">◆</span>
+
+                        <div>
+                            <h3>Database</h3>
+
+                            <p>
+                                MySQL database connection
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="databaseStatus"
+                        class="status-value status-checking">
+
+                        Checking...
+
+                    </div>
+
+                </div>
+
+
+                <div class="setting-card">
+
+                    <div class="setting-header">
+
+                        <span class="setting-icon">✦</span>
+
+                        <div>
+                            <h3>AI Analyzer</h3>
+
+                            <p>
+                                AI report generation service
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="aiStatus"
+                        class="status-value status-checking">
+
+                        Checking...
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SCAN CONFIGURATION
+        ========================== -->
+
+        <section class="settings-section">
+
+            <h2>Scan Configuration</h2>
+
+            <div class="configuration-card">
+
+                <div class="configuration-row">
+
+                    <div>
+                        <h3>Repository Analysis</h3>
+
+                        <p>
+                            Analyze repository source files and project structure.
+                        </p>
+                    </div>
+
+                    <span class="enabled-badge">
+                        Enabled
+                    </span>
+
+                </div>
+
+
+                <div class="configuration-row">
+
+                    <div>
+                        <h3>Secret Detection</h3>
+
+                        <p>
+                            Detect potentially exposed credentials and secrets.
+                        </p>
+                    </div>
+
+                    <span class="enabled-badge">
+                        Enabled
+                    </span>
+
+                </div>
+
+
+                <div class="configuration-row">
+
+                    <div>
+                        <h3>Dependency Analysis</h3>
+
+                        <p>
+                            Check project dependencies for known vulnerabilities.
+                        </p>
+                    </div>
+
+                    <span class="enabled-badge">
+                        Enabled
+                    </span>
+
+                </div>
+
+
+                <div class="configuration-row">
+
+                    <div>
+                        <h3>CI/CD Security</h3>
+
+                        <p>
+                            Review GitHub Actions workflows for security risks.
+                        </p>
+                    </div>
+
+                    <span class="enabled-badge">
+                        Enabled
+                    </span>
+
+                </div>
+
+
+                <div class="configuration-row">
+
+                    <div>
+                        <h3>Static Analysis</h3>
+
+                        <p>
+                            Analyze source code using Semgrep security rules.
+                        </p>
+                    </div>
+
+                    <span class="enabled-badge">
+                        Enabled
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SECURITY INFORMATION
+        ========================== -->
+
+        <section class="settings-section">
+
+            <h2>Security</h2>
+
+            <div class="information-card">
+
+                <div class="information-item">
+
+                    <span class="information-label">
+                        Secret values
+                    </span>
+
+                    <span class="information-value">
+                        Never displayed
+                    </span>
+
+                </div>
+
+
+                <div class="information-item">
+
+                    <span class="information-label">
+                        Repository execution
+                    </span>
+
+                    <span class="information-value">
+                        Disabled
+                    </span>
+
+                </div>
+
+
+                <div class="information-item">
+
+                    <span class="information-label">
+                        Temporary scan files
+                    </span>
+
+                    <span class="information-value">
+                        Automatically removed
+                    </span>
+
+                </div>
+
+
+                <div class="information-item">
+
+                    <span class="information-label">
+                        Authentication
+                    </span>
+
+                    <span class="information-value">
+                        Not required
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ABOUT
+        ========================== -->
+
+        <section class="settings-section">
+
+            <h2>About RepoGuard</h2>
+
+            <div class="about-card">
+
+                <div class="about-logo">
+                    🛡
+                </div>
+
+                <div>
+
+                    <h3>RepoGuard</h3>
+
+                    <p>
+                        AI-Powered GitHub Repository Security & Health Analyzer.
+                    </p>
+
+                    <p class="about-description">
+                        RepoGuard combines deterministic security scanners,
+                        dependency analysis, CI/CD checks, code health metrics,
+                        transparent scoring, and AI-assisted explanations.
+                    </p>
+
+                    <span class="version">
+                        Version 1.0.0
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="js/settings.js"></script>
+<script src="js/navigation.js"></script>
+</body>
+
+</html>

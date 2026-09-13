@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="RepoGuard AI Security Analysis Report"
+    >
+
+    <title>AI Security Report | RepoGuard</title>
+
+    <!-- AI Report Styles -->
+    <link
+        rel="stylesheet"
+        href="css/ai-report.css"
+    >
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RepoGuard Dashboard</title>
+
+    <link rel="icon" type="image/png" href="assets/repoguard-logo.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+    <!-- ==========================================
+         PAGE HEADER
+    =========================================== -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <a
+                href="dashboard.html"
+                class="brand"
+            >
+                RepoGuard
+            </a>
+
+            <span class="page-divider">/</span>
+
+            <span class="page-title">
+                AI Security Report
+            </span>
+
+        </div>
+
+        <div class="topbar-right">
+
+            <button
+                type="button"
+                id="backButton"
+                class="btn btn-secondary"
+            >
+                ← Back
+            </button>
+
+            <button
+                type="button"
+                id="refreshButton"
+                class="btn btn-primary"
+            >
+                Refresh Report
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==========================================
+         MAIN CONTENT
+    =========================================== -->
+
+    <main class="main-container">
+
+        <!-- Loading State -->
+
+        <section
+            id="loadingState"
+            class="state-card"
+            aria-live="polite"
+        >
+
+            <div class="loading-spinner"></div>
+
+            <h2>
+                Generating AI Report
+            </h2>
+
+            <p>
+                RepoGuard is analyzing the completed
+                security scan and preparing the report.
+            </p>
+
+        </section>
+
+
+        <!-- Error State -->
+
+        <section
+            id="errorState"
+            class="state-card error-state hidden"
+            aria-live="assertive"
+        >
+
+            <div class="state-icon">
+                !
+            </div>
+
+            <h2>
+                Unable to Generate Report
+            </h2>
+
+            <p id="errorMessage">
+                Something went wrong while generating
+                the AI report.
+            </p>
+
+            <button
+                type="button"
+                id="retryButton"
+                class="btn btn-primary"
+            >
+                Try Again
+            </button>
+
+        </section>
+
+
+        <!-- ==========================================
+             AI REPORT CONTENT
+        =========================================== -->
+
+        <div
+            id="reportContent"
+            class="report-content hidden"
+        >
+
+            <!-- --------------------------------------
+                 Report Header
+            --------------------------------------- -->
+
+            <section class="report-header">
+
+                <div class="report-header-main">
+
+                    <div class="eyebrow">
+                        REPOGUARD AI ANALYSIS
+                    </div>
+
+                    <h1>
+                        AI Security Report
+                    </h1>
+
+                    <p class="report-description">
+                        AI-powered explanation and prioritization
+                        of findings detected by RepoGuard.
+                    </p>
+
+                </div>
+
+                <div class="report-actions">
+
+                    <button
+                        type="button"
+                        id="printButton"
+                        class="btn btn-secondary"
+                    >
+                        Print Report
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- --------------------------------------
+                 Scan Information
+            --------------------------------------- -->
+
+            <section class="scan-info-card">
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Scan ID
+                    </span>
+
+                    <strong
+                        id="scanId"
+                        class="info-value"
+                    >
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Overall Score
+                    </span>
+
+                    <strong
+                        id="overallScore"
+                        class="info-value score-value"
+                    >
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Security
+                    </span>
+
+                    <strong
+                        id="securityScore"
+                        class="info-value"
+                    >
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Dependencies
+                    </span>
+
+                    <strong
+                        id="dependencyScore"
+                        class="info-value"
+                    >
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Secrets
+                    </span>
+
+                    <strong
+                        id="secretScore"
+                        class="info-value"
+                    >
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        CI/CD
+                    </span>
+
+                    <strong
+                        id="cicdScore"
+                        class="info-value"
+                    >
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Code Health
+                    </span>
+
+                    <strong
+                        id="healthScore"
+                        class="info-value"
+                    >
+                        —
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <!-- --------------------------------------
+                 AI Notice
+            --------------------------------------- -->
+
+            <section class="ai-notice">
+
+                <div class="notice-icon">
+                    AI
+                </div>
+
+                <div class="notice-content">
+
+                    <h3>
+                        Grounded AI Analysis
+                    </h3>
+
+                    <p>
+                        This report explains findings detected
+                        by RepoGuard. The AI is instructed not to
+                        invent vulnerabilities or expose detected
+                        secret values.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- --------------------------------------
+                 Executive Summary
+            --------------------------------------- -->
+
+            <section class="report-section">
+
+                <div class="section-heading">
+
+                    <span class="section-number">
+                        01
+                    </span>
+
+                    <div>
+                        <h2>
+                            Executive Summary
+                        </h2>
+
+                        <p>
+                            High-level assessment of the repository.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div
+                    id="executiveSummary"
+                    class="report-text"
+                >
+                    <p>
+                        Loading summary...
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- --------------------------------------
+                 Overall Risk
+            --------------------------------------- -->
+
+            <section class="report-section">
+
+                <div class="section-heading">
+
+                    <span class="section-number">
+                        02
+                    </span>
+
+                    <div>
+                        <h2>
+                            Overall Risk
+                        </h2>
+
+                        <p>
+                            Overall security and repository risk assessment.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div
+                    id="overallRisk"
+                    class="report-text"
+                >
+                    <p>
+                        Loading risk assessment...
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- --------------------------------------
+                 Top Security Risks
+            --------------------------------------- -->
+
+            <section class="report-section">
+
+                <div class="section-heading">
+
+                    <span class="section-number">
+                        03
+                    </span>
+
+                    <div>
+                        <h2>
+                            Top Security Risks
+                        </h2>
+
+                        <p>
+                            Most important security issues identified
+                            by RepoGuard.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div
+                    id="securityRisks"
+                    class="report-text"
+                >
+                    <p>
+                        Loading security risks...
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- --------------------------------------
+                 Dependency Risks
+            --------------------------------------- -->
+
+            <section class="report-section">
+
+                <div class="section-heading">
+
+                    <span class="section-number">
+                        04
+                    </span>
+
+                    <div>
+                        <h2>
+                            Dependency Risks
+                        </h2>
+
+                        <p>
+                            Analysis of detected third-party dependencies.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div
+                    id="dependencyRisks"
+                    class="report-text"
+                >
+                    <p>
+                        Loading dependency analysis...
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- --------------------------------------
+                 Secret Detection
+            --------------------------------------- -->
+
+            <section class="report-section">
+
+                <div class="section-heading">
+
+                    <span class="section-number">
+                        05
+                    </span>
+
+                    <div>
+                        <h2>
+                            Secret Detection Summary
+                        </h2>
+
+                        <p>
+                            Summary of potentially exposed credentials
+                            and secrets.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div
+                    id="secretSummary"
+                    class="report-text"
+                >
+                    <p>
+                        Loading secret analysis...
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- --------------------------------------
+                 CI/CD Security
+            --------------------------------------- -->
+
+            <section class="report-section">
+
+                <div class="section-heading">
+
+                    <span class="section-number">
+                        06
+                    </span>
+
+                    <div>
+                        <h2>
+                            CI/CD Security
+                        </h2>
+
+                        <p>
+                            Analysis of GitHub Actions and workflow security.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div
+                    id="cicdSecurity"
+                    class="report-text"
+                >
+                    <p>
+                        Loading CI/CD analysis...
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- --------------------------------------
+                 Code Health
+            --------------------------------------- -->
+
+            <section class="report-section">
+
+                <div class="section-heading">
+
+                    <span class="section-number">
+                        07
+                    </span>
+
+                    <div>
+                        <h2>
+                            Code Health
+                        </h2>
+
+                        <p>
+                            Repository structure, maintainability
+                            and code-quality observations.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div
+                    id="codeHealth"
+                    class="report-text"
+                >
+                    <p>
+                        Loading code health analysis...
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- --------------------------------------
+                 Recommended Actions
+            --------------------------------------- -->
+
+            <section class="report-section recommendations-section">
+
+                <div class="section-heading">
+
+                    <span class="section-number">
+                        08
+                    </span>
+
+                    <div>
+                        <h2>
+                            Recommended Actions
+                        </h2>
+
+                        <p>
+                            Practical actions to improve repository security.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div
+                    id="recommendedActions"
+                    class="report-text"
+                >
+                    <p>
+                        Loading recommendations...
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- --------------------------------------
+                 Report Footer
+            --------------------------------------- -->
+
+            <footer class="report-footer">
+
+                <div>
+
+                    <strong>
+                        RepoGuard
+                    </strong>
+
+                    <span>
+                        AI-Powered GitHub Repository Security
+                        &amp; Health Analyzer
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        AI explanations are based on
+                        RepoGuard scan results.
+                    </span>
+
+                </div>
+
+            </footer>
+
+        </div>
+
+    </main>
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+    =========================================== -->
+
+    <script
+        src="js/ai-report.js"
+    ></script>
+
+    <script src="js/navigation.js"></script>
+</body>
+</html>

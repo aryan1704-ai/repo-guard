@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CI/CD Security - RepoGuard</title>
+
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RepoGuard Dashboard</title>
+
+    <link rel="icon" type="image/png" href="assets/repoguard-logo.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <style>
+        .cicd-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .cicd-card {
+            background: #111820;
+            border: 1px solid #252d36;
+            border-radius: 7px;
+            padding: 20px;
+        }
+
+        .cicd-card p {
+            color: #788592;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .cicd-card h2 {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .cicd-card small {
+            display: block;
+            margin-top: 7px;
+            color: #788592;
+            font-size: 11px;
+        }
+
+        .cicd-filters {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 18px 0;
+        }
+
+        .cicd-filters label {
+            color: #788592;
+            font-size: 11px;
+        }
+
+        .cicd-filters select,
+        .cicd-filters input {
+            background: #0d1117;
+            color: #e6edf3;
+            border: 1px solid #303945;
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .cicd-filters select:focus,
+        .cicd-filters input:focus {
+            border-color: #2563eb;
+        }
+
+        .cicd-filters select {
+            min-width: 150px;
+        }
+
+        .cicd-filters input {
+            min-width: 230px;
+            flex: 1;
+        }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .severity-high {
+            background: #3b2415;
+            color: #ffad70;
+        }
+
+        .severity-medium {
+            background: #3b3515;
+            color: #e8d66b;
+        }
+
+        .severity-low {
+            background: #152b3b;
+            color: #79b8ff;
+        }
+
+        .workflow-name {
+            color: #e6edf3;
+            font-weight: 500;
+        }
+
+        .rule-name {
+            color: #79b8ff;
+            font-family: monospace;
+            font-size: 11px;
+        }
+
+        .cicd-description {
+            color: #a8b3bf;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .cicd-result-count {
+            color: #788592;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .no-findings {
+            padding: 20px;
+            text-align: center;
+            color: #79b8ff;
+            font-size: 13px;
+        }
+
+        .security-note {
+            margin-top: 15px;
+            padding: 12px 14px;
+            border-left: 3px solid #2563eb;
+            background: #0d1117;
+            color: #8995a1;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1000px) {
+
+            .cicd-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .cicd-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .cicd-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .cicd-filters select,
+            .cicd-filters input {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <img
+                src="assets/repoguard-logo.png"
+                alt="RepoGuard"
+            >
+
+            <span>
+                RepoGuard
+            </span>
+
+        </div>
+
+
+        <nav>
+
+            <a
+                href="dashboard.html"
+                class="nav-link"
+            >
+                <span>▦</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="new-scan.html"
+                class="nav-link"
+            >
+                <span>＋</span>
+                New Scan
+            </a>
+
+
+            <a
+                href="#"
+                class="nav-link"
+            >
+                <span>◷</span>
+                Scan History
+            </a>
+
+
+            <p class="nav-heading">
+                ANALYSIS
+            </p>
+
+
+            <a
+                href="scan-results.html"
+                class="nav-link"
+            >
+                <span>🛡</span>
+                Security
+            </a>
+
+
+            <a
+                href="dependencies.html"
+                class="nav-link"
+            >
+                <span>📦</span>
+                Dependencies
+            </a>
+
+
+            <a
+                href="secrets.html"
+                class="nav-link"
+            >
+                <span>🔑</span>
+                Secrets
+            </a>
+
+
+            <a
+                href="cicd.html"
+                class="nav-link active"
+            >
+                <span>⚙</span>
+                CI/CD
+            </a>
+
+
+            <a
+                href="code-health.html"
+                class="nav-link"
+            >
+                <span>⌘</span>
+                Code Health
+            </a>
+
+
+            <p class="nav-heading">
+                REPORTS
+            </p>
+
+
+            <a
+                href="ai-report.html"
+                class="nav-link"
+            >
+                <span>✦</span>
+                AI Report
+            </a>
+
+        </nav>
+
+
+        <a
+            href="settings.html"
+            class="nav-link settings"
+        >
+            <span>⚙</span>
+            Settings
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    CI/CD Security
+                </h1>
+
+                <p id="repositorySubtitle">
+                    Analyzing GitHub Actions workflows
+                </p>
+
+            </div>
+
+
+            <button id="newScanButton">
+                + New Scan
+            </button>
+
+        </header>
+
+
+        <!-- REPOSITORY -->
+
+        <section class="repository">
+
+            <div>
+
+                <small>
+                    ANALYZED REPOSITORY
+                </small>
+
+
+                <h2 id="repositoryName">
+                    Loading...
+                </h2>
+
+
+                <p id="repositoryUrl">
+                    Loading repository information...
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <small>
+                    CI/CD SECURITY SCORE
+                </small>
+
+
+                <h2>
+
+                    <span id="cicdScore">
+                        --
+                    </span>
+
+                    <small>
+                        /100
+                    </small>
+
+                </h2>
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+
+        <section class="cicd-summary">
+
+
+            <div class="cicd-card">
+
+                <p>
+                    WORKFLOWS
+                </p>
+
+                <h2 id="workflowCount">
+                    0
+                </h2>
+
+                <small>
+                    GitHub Actions workflows detected
+                </small>
+
+            </div>
+
+
+            <div class="cicd-card">
+
+                <p>
+                    TOTAL FINDINGS
+                </p>
+
+                <h2 id="totalFindings">
+                    0
+                </h2>
+
+                <small>
+                    CI/CD security findings
+                </small>
+
+            </div>
+
+
+            <div class="cicd-card">
+
+                <p>
+                    HIGH SEVERITY
+                </p>
+
+                <h2
+                    id="highFindings"
+                    class="severity-high"
+                >
+                    0
+                </h2>
+
+                <small>
+                    High-risk workflow issues
+                </small>
+
+            </div>
+
+
+            <div class="cicd-card">
+
+                <p>
+                    MEDIUM + LOW
+                </p>
+
+                <h2 id="mediumLowFindings">
+                    0
+                </h2>
+
+                <small>
+                    Lower-severity findings
+                </small>
+
+            </div>
+
+        </section>
+
+
+        <!-- FINDINGS -->
+
+        <section class="panel recent-scans">
+
+
+            <div class="panel-title">
+
+                <div>
+
+                    <h3>
+                        Workflow Security Findings
+                    </h3>
+
+                    <p>
+                        Security issues detected in GitHub Actions workflows
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+
+            <div class="cicd-filters">
+
+
+                <label for="severityFilter">
+                    Severity
+                </label>
+
+
+                <select id="severityFilter">
+
+                    <option value="ALL">
+                        All Severities
+                    </option>
+
+                    <option value="HIGH">
+                        High
+                    </option>
+
+                    <option value="MEDIUM">
+                        Medium
+                    </option>
+
+                    <option value="LOW">
+                        Low
+                    </option>
+
+                </select>
+
+
+                <label for="cicdSearch">
+                    Search findings
+                </label>
+
+
+                <input
+                    type="text"
+                    id="cicdSearch"
+                    placeholder="Search workflow, rule or description..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div
+                class="cicd-result-count"
+                id="cicdResultCount"
+            >
+                Loading findings...
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Severity
+                            </th>
+
+                            <th>
+                                Workflow
+                            </th>
+
+                            <th>
+                                Rule
+                            </th>
+
+                            <th>
+                                Description
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="cicdTableBody">
+
+                        <tr>
+
+                            <td colspan="4">
+                                Loading CI/CD findings...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="security-note">
+
+                RepoGuard analyzes GitHub Actions workflow configuration
+                for risky permissions, unsafe expressions, unpinned
+                actions and other CI/CD security concerns.
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="js/cicd.js"></script>
+<script src="js/navigation.js"></script>
+</body>
+
+</html>

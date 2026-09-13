@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RepoGuard Dashboard</title>
+
+    <link rel="icon" type="image/png" href="assets/repoguard-logo.png">
+
+
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <style>
+        .dependency-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .dependency-card {
+            background: #111820;
+            border: 1px solid #252d36;
+            border-radius: 7px;
+            padding: 20px;
+        }
+
+        .dependency-card p {
+            color: #788592;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .dependency-card h2 {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .dependency-card small {
+            display: block;
+            margin-top: 7px;
+            color: #788592;
+            font-size: 11px;
+        }
+
+        .dependency-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 18px 0;
+        }
+
+        .dependency-filters label {
+            color: #788592;
+            font-size: 11px;
+            align-self: center;
+        }
+
+        .dependency-filters select,
+        .dependency-filters input {
+            background: #0d1117;
+            color: #e6edf3;
+            border: 1px solid #303945;
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .dependency-filters select:focus,
+        .dependency-filters input:focus {
+            border-color: #2563eb;
+        }
+
+        .dependency-filters input {
+            min-width: 230px;
+        }
+
+        .vulnerable {
+            color: #ffad70;
+            font-weight: 600;
+        }
+
+        .safe {
+            color: #79b8ff;
+        }
+
+        .dependency-name {
+            color: #e6edf3;
+            font-weight: 500;
+        }
+
+        .dependency-version {
+            color: #788592;
+            font-size: 11px;
+        }
+
+        .dependency-result-count {
+            color: #788592;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 800px) {
+
+            .dependency-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .dependency-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .dependency-filters select,
+            .dependency-filters input {
+                width: 100%;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <img
+                src="assets/repoguard-logo.png"
+                alt="RepoGuard"
+            >
+
+            <span>
+                RepoGuard
+            </span>
+
+        </div>
+
+
+        <nav>
+
+            <a
+                href="dashboard.html"
+                class="nav-link"
+            >
+                <span>▦</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="new-scan.html"
+                class="nav-link"
+            >
+                <span>＋</span>
+                New Scan
+            </a>
+
+
+            <a
+                href="scan-history.html"
+                class="nav-link"
+            >
+                <span>◷</span>
+                Scan History
+            </a>
+
+
+            <p class="nav-heading">
+                ANALYSIS
+            </p>
+
+
+            <a
+                href="scan-results.html"
+                class="nav-link"
+            >
+                <span>🛡</span>
+                Security
+            </a>
+
+
+            <a
+                href="dependencies.html"
+                class="nav-link active"
+            >
+                <span>📦</span>
+                Dependencies
+            </a>
+
+
+            <a
+                href="secrets.html"
+                class="nav-link"
+            >
+                <span>🔑</span>
+                Secrets
+            </a>
+
+
+            <a
+                href="cicd.html"
+                class="nav-link"
+            >
+                <span>⚙</span>
+                CI/CD
+            </a>
+
+
+            <a
+                href="code-health.html"
+                class="nav-link"
+            >
+                <span>⌘</span>
+                Code Health
+            </a>
+
+
+            <p class="nav-heading">
+                REPORTS
+            </p>
+
+
+            <a
+                href="ai-report.html"
+                class="nav-link"
+            >
+                <span>✦</span>
+                AI Report
+            </a>
+
+        </nav>
+
+
+        <a
+            href="#"
+            class="nav-link settings"
+        >
+            <span>⚙</span>
+            Settings
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Dependency Analysis
+                </h1>
+
+                <p id="repositorySubtitle">
+                    Analyzing project dependencies
+                </p>
+
+            </div>
+
+
+            <button id="newScanButton">
+                + New Scan
+            </button>
+
+        </header>
+
+
+        <!-- REPOSITORY -->
+
+        <section class="repository">
+
+            <div>
+
+                <small>
+                    ANALYZED REPOSITORY
+                </small>
+
+
+                <h2 id="repositoryName">
+                    Loading...
+                </h2>
+
+
+                <p id="repositoryUrl">
+                    Loading repository information...
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <small>
+                    DEPENDENCY SCORE
+                </small>
+
+
+                <h2>
+
+                    <span id="dependencyScore">
+                        --
+                    </span>
+
+                    <small>
+                        /100
+                    </small>
+
+                </h2>
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+
+        <section class="dependency-summary">
+
+
+            <div class="dependency-card">
+
+                <p>
+                    TOTAL DEPENDENCIES
+                </p>
+
+                <h2 id="totalDependencies">
+                    0
+                </h2>
+
+                <small>
+                    Dependencies detected
+                </small>
+
+            </div>
+
+
+            <div class="dependency-card">
+
+                <p>
+                    VULNERABLE DEPENDENCIES
+                </p>
+
+                <h2
+                    id="vulnerableDependencies"
+                    class="vulnerable"
+                >
+                    0
+                </h2>
+
+                <small>
+                    Dependencies with known vulnerabilities
+                </small>
+
+            </div>
+
+
+            <div class="dependency-card">
+
+                <p>
+                    TOTAL VULNERABILITIES
+                </p>
+
+                <h2
+                    id="totalVulnerabilities"
+                    class="vulnerable"
+                >
+                    0
+                </h2>
+
+                <small>
+                    Known vulnerabilities detected
+                </small>
+
+            </div>
+
+        </section>
+
+
+        <!-- DEPENDENCY TABLE -->
+
+        <section class="panel recent-scans">
+
+
+            <div class="panel-title">
+
+                <div>
+
+                    <h3>
+                        Project Dependencies
+                    </h3>
+
+                    <p>
+                        Dependencies detected during the repository scan
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+
+            <div class="dependency-filters">
+
+
+                <label for="ecosystemFilter">
+                    Ecosystem
+                </label>
+
+
+                <select id="ecosystemFilter">
+
+                    <option value="ALL">
+                        All Ecosystems
+                    </option>
+
+                </select>
+
+
+                <label for="dependencySearch">
+                    Search dependencies
+                </label>
+
+
+                <input
+                    type="text"
+                    id="dependencySearch"
+                    placeholder="Search dependencies..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div
+                class="dependency-result-count"
+                id="dependencyResultCount"
+            >
+                Loading dependencies...
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Dependency
+                            </th>
+
+                            <th>
+                                Version
+                            </th>
+
+                            <th>
+                                Ecosystem
+                            </th>
+
+                            <th>
+                                Vulnerabilities
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="dependencyTableBody">
+
+                        <tr>
+
+                            <td colspan="4">
+                                Loading dependencies...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="js/dependencies.js"></script>
+<script src="js/navigation.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RepoGuard Dashboard</title>
+
+    <link rel="icon" type="image/png" href="assets/repoguard-logo.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Code Health - RepoGuard</title>
+
+    <link
+        rel="stylesheet"
+        href="css/dashboard.css"
+    >
+
+    <style>
+        .health-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .health-card {
+            background: #111820;
+            border: 1px solid #252d36;
+            border-radius: 7px;
+            padding: 20px;
+        }
+
+        .health-card p {
+            color: #788592;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .health-card h2 {
+            font-size: 27px;
+            margin: 0;
+        }
+
+        .health-card small {
+            display: block;
+            margin-top: 7px;
+            color: #788592;
+            font-size: 11px;
+        }
+
+        .health-status {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .status-good {
+            background: #15321f;
+            color: #72d49a;
+        }
+
+        .status-warning {
+            background: #3b3515;
+            color: #e8d66b;
+        }
+
+        .status-missing {
+            background: #3b2415;
+            color: #ffad70;
+        }
+
+        .health-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .health-detail {
+            background: #111820;
+            border: 1px solid #252d36;
+            border-radius: 7px;
+            padding: 20px;
+        }
+
+        .health-detail h3 {
+            margin-bottom: 6px;
+        }
+
+        .health-detail p {
+            color: #788592;
+            font-size: 12px;
+            margin-bottom: 18px;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 11px 0;
+            border-bottom: 1px solid #202831;
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-name {
+            color: #a8b3bf;
+            font-size: 12px;
+        }
+
+        .metric-value {
+            color: #e6edf3;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .language-list {
+            margin-top: 10px;
+        }
+
+        .language-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 9px 0;
+            border-bottom: 1px solid #202831;
+        }
+
+        .language-row:last-child {
+            border-bottom: none;
+        }
+
+        .language-name {
+            color: #a8b3bf;
+            font-size: 12px;
+        }
+
+        .language-count {
+            color: #79b8ff;
+            font-size: 12px;
+        }
+
+        .health-note {
+            margin-top: 15px;
+            padding: 12px 14px;
+            border-left: 3px solid #2563eb;
+            background: #0d1117;
+            color: #8995a1;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1000px) {
+            .health-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .health-summary,
+            .health-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <img
+                src="assets/repoguard-logo.png"
+                alt="RepoGuard"
+            >
+
+            <span>
+                RepoGuard
+            </span>
+
+        </div>
+
+        <nav>
+
+            <a
+                href="dashboard.html"
+                class="nav-link"
+            >
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a
+                href="new-scan.html"
+                class="nav-link"
+            >
+                <span>＋</span>
+                New Scan
+            </a>
+
+            <a
+                href="scan-history.html"
+                class="nav-link"
+            >
+                <span>◷</span>
+                Scan History
+            </a>
+
+            <p class="nav-heading">
+                ANALYSIS
+            </p>
+
+            <a
+                href="scan-results.html"
+                class="nav-link"
+            >
+                <span>🛡</span>
+                Security
+            </a>
+
+            <a
+                href="dependencies.html"
+                class="nav-link"
+            >
+                <span>📦</span>
+                Dependencies
+            </a>
+
+            <a
+                href="secrets.html"
+                class="nav-link"
+            >
+                <span>🔑</span>
+                Secrets
+            </a>
+
+            <a
+                href="cicd.html"
+                class="nav-link"
+            >
+                <span>⚙</span>
+                CI/CD
+            </a>
+
+            <a
+                href="code-health.html"
+                class="nav-link active"
+            >
+                <span>⌘</span>
+                Code Health
+            </a>
+
+            <p class="nav-heading">
+                REPORTS
+            </p>
+
+            <a
+                href="ai-report.html"
+                class="nav-link"
+            >
+                <span>✦</span>
+                AI Report
+            </a>
+
+        </nav>
+
+        <a
+            href="settings.html"
+            class="nav-link settings"
+        >
+            <span>⚙</span>
+            Settings
+        </a>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Code Health
+                </h1>
+
+                <p id="repositorySubtitle">
+                    Repository quality and maintainability analysis
+                </p>
+
+            </div>
+
+            <button id="newScanButton">
+                + New Scan
+            </button>
+
+        </header>
+
+
+        <!-- REPOSITORY -->
+
+        <section class="repository">
+
+            <div>
+
+                <small>
+                    ANALYZED REPOSITORY
+                </small>
+
+                <h2 id="repositoryName">
+                    Loading...
+                </h2>
+
+                <p id="repositoryUrl">
+                    Loading repository information...
+                </p>
+
+            </div>
+
+            <div>
+
+                <small>
+                    CODE HEALTH SCORE
+                </small>
+
+                <h2>
+
+                    <span id="healthScore">
+                        --
+                    </span>
+
+                    <small>
+                        /100
+                    </small>
+
+                </h2>
+
+                <span
+                    id="healthRisk"
+                    class="health-status"
+                >
+                    --
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY CARDS -->
+
+        <section class="health-summary">
+
+            <div class="health-card">
+
+                <p>
+                    TOTAL FILES
+                </p>
+
+                <h2 id="totalFiles">
+                    0
+                </h2>
+
+                <small>
+                    Files found in repository
+                </small>
+
+            </div>
+
+
+            <div class="health-card">
+
+                <p>
+                    CODE FILES
+                </p>
+
+                <h2 id="codeFiles">
+                    0
+                </h2>
+
+                <small>
+                    Recognized source-code files
+                </small>
+
+            </div>
+
+
+            <div class="health-card">
+
+                <p>
+                    LINES OF CODE
+                </p>
+
+                <h2 id="totalLines">
+                    0
+                </h2>
+
+                <small>
+                    Total lines analyzed
+                </small>
+
+            </div>
+
+
+            <div class="health-card">
+
+                <p>
+                    TEST FILES
+                </p>
+
+                <h2 id="testFiles">
+                    0
+                </h2>
+
+                <small>
+                    Test-related files detected
+                </small>
+
+            </div>
+
+        </section>
+
+
+        <!-- DETAIL -->
+
+        <section class="health-grid">
+
+            <div class="health-detail">
+
+                <h3>
+                    Repository Quality
+                </h3>
+
+                <p>
+                    Basic indicators of repository organization
+                </p>
+
+
+                <div class="metric-row">
+
+                    <span class="metric-name">
+                        README
+                    </span>
+
+                    <span
+                        id="readmeStatus"
+                        class="health-status"
+                    >
+                        Checking...
+                    </span>
+
+                </div>
+
+
+                <div class="metric-row">
+
+                    <span class="metric-name">
+                        Dependency Files
+                    </span>
+
+                    <strong
+                        id="dependencyFiles"
+                        class="metric-value"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="metric-row">
+
+                    <span class="metric-name">
+                        TODO / FIXME
+                    </span>
+
+                    <strong
+                        id="todoCount"
+                        class="metric-value"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="metric-row">
+
+                    <span class="metric-name">
+                        Large Files
+                    </span>
+
+                    <strong
+                        id="largeFiles"
+                        class="metric-value"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="health-detail">
+
+                <h3>
+                    Source Code
+                </h3>
+
+                <p>
+                    Languages detected in the repository
+                </p>
+
+                <div
+                    id="languageList"
+                    class="language-list"
+                >
+                    <div class="metric-row">
+                        <span class="metric-name">
+                            Loading languages...
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- INFORMATION -->
+
+        <section class="panel">
+
+            <div class="panel-title">
+
+                <div>
+
+                    <h3>
+                        Code Health Overview
+                    </h3>
+
+                    <p>
+                        Metrics collected directly from the analyzed repository
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="health-note">
+
+                RepoGuard evaluates repository structure, source-code
+                volume, documentation, testing indicators, dependency
+                files and maintenance markers. These metrics are used
+                as inputs to the Code Health score.
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="js/code-health.js"></script>
+<script src="js/navigation.js"></script>
+</body>
+
+</html>

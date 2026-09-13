@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RepoGuard Dashboard</title>
+
+    <link rel="icon" type="image/png" href="assets/repoguard-logo.png">
+
+
+    <link rel="stylesheet" href="css/repository-details.css">
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <span class="logo-icon">🛡</span>
+            <span>RepoGuard</span>
+        </div>
+
+        <nav>
+
+            <a href="dashboard.html" class="nav-link">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="new-scan.html" class="nav-link">
+                <span>＋</span>
+                New Scan
+            </a>
+
+            <a href="scan-history.html" class="nav-link">
+                <span>◷</span>
+                Scan History
+            </a>
+
+            <div class="nav-heading">
+                ANALYSIS
+            </div>
+
+            <a href="scan-results.html" class="nav-link">
+                <span>◈</span>
+                Security Findings
+            </a>
+
+            <a href="dependencies.html" class="nav-link">
+                <span>◇</span>
+                Dependencies
+            </a>
+
+            <a href="secrets.html" class="nav-link">
+                <span>◆</span>
+                Secrets
+            </a>
+
+            <a href="cicd.html" class="nav-link">
+                <span>⚙</span>
+                CI/CD Security
+            </a>
+
+            <a href="code-health.html" class="nav-link">
+                <span>⌁</span>
+                Code Health
+            </a>
+
+            <a href="ai-report.html" class="nav-link">
+                <span>✦</span>
+                AI Report
+            </a>
+
+            <div class="nav-heading">
+                REPOSITORY
+            </div>
+
+            <a
+                href="repository-details.html"
+                class="nav-link active">
+                <span>▤</span>
+                Repository Details
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main-content">
+
+        <!-- Header -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Repository Details
+                </h1>
+
+                <p>
+                    GitHub repository information for the selected scan.
+                </p>
+
+            </div>
+
+
+            <a
+                href="scan-results.html"
+                class="back-button">
+
+                ← Back to Results
+
+            </a>
+
+        </header>
+
+
+        <!-- =========================
+             ERROR MESSAGE
+        ========================== -->
+
+        <div
+            id="errorMessage"
+            class="error-message"
+            role="alert"
+            style="display: none;">
+
+        </div>
+
+
+        <!-- =========================
+             REPOSITORY OVERVIEW
+        ========================== -->
+
+        <section class="repository-card">
+
+            <div class="repository-header">
+
+                <div class="repository-icon">
+                    ◇
+                </div>
+
+
+                <div class="repository-title">
+
+                    <h2 id="repositoryName">
+                        Loading repository...
+                    </h2>
+
+                    <p id="repositoryDescription">
+                        Loading repository description...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="repository-link-container">
+
+                <span>
+                    GitHub Repository
+                </span>
+
+                <a
+                    id="githubLink"
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    Open on GitHub ↗
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             REPOSITORY INFORMATION
+        ========================== -->
+
+        <section class="details-section">
+
+            <h2>
+                Repository Information
+            </h2>
+
+
+            <div class="details-grid">
+
+                <!-- Owner -->
+
+                <div class="detail-card">
+
+                    <div class="detail-label">
+                        Owner
+                    </div>
+
+                    <div
+                        id="repositoryOwner"
+                        class="detail-value">
+
+                        --
+
+                    </div>
+
+                </div>
+
+
+                <!-- Language -->
+
+                <div class="detail-card">
+
+                    <div class="detail-label">
+                        Primary Language
+                    </div>
+
+                    <div
+                        id="repositoryLanguage"
+                        class="detail-value">
+
+                        --
+
+                    </div>
+
+                </div>
+
+
+                <!-- Stars -->
+
+                <div class="detail-card">
+
+                    <div class="detail-label">
+                        Stars
+                    </div>
+
+                    <div
+                        id="repositoryStars"
+                        class="detail-value">
+
+                        --
+
+                    </div>
+
+                </div>
+
+
+                <!-- Forks -->
+
+                <div class="detail-card">
+
+                    <div class="detail-label">
+                        Forks
+                    </div>
+
+                    <div
+                        id="repositoryForks"
+                        class="detail-value">
+
+                        --
+
+                    </div>
+
+                </div>
+
+
+                <!-- Default Branch -->
+
+                <div class="detail-card">
+
+                    <div class="detail-label">
+                        Default Branch
+                    </div>
+
+                    <div
+                        id="repositoryBranch"
+                        class="detail-value">
+
+                        --
+
+                    </div>
+
+                </div>
+
+
+                <!-- Last Updated -->
+
+                <div class="detail-card">
+
+                    <div class="detail-label">
+                        Last Updated
+                    </div>
+
+                    <div
+                        id="repositoryUpdated"
+                        class="detail-value">
+
+                        --
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             REPOSITORY URL
+        ========================== -->
+
+        <section class="url-section">
+
+            <h2>
+                Repository URL
+            </h2>
+
+
+            <div class="url-box">
+
+                <span id="repositoryNameUrl">
+                    Loading repository URL...
+                </span>
+
+
+                <a
+                    id="githubLinkBottom"
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    View Repository ↗
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================== -->
+
+<script src="js/repository-details.js"></script>
+<script src="js/navigation.js"></script>
+</body>
+
+</html>

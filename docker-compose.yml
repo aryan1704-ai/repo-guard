@@ -1,0 +1,59 @@
+services:
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+
+    container_name: repoguard-backend
+
+    ports:
+      - "8000:8000"
+
+    environment:
+      DATABASE_URL: mysql+pymysql://repoguard:repoguard_password@mysql:3306/repo_guard
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_MODEL: ${GEMINI_MODEL}
+
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+    restart: unless-stopped
+
+
+  mysql:
+    image: mysql:8.4
+
+    container_name: repoguard-mysql
+
+    environment:
+      MYSQL_DATABASE: repo_guard
+      MYSQL_USER: repoguard
+      MYSQL_PASSWORD: repoguard_password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "repoguard",
+          "-prepo_guard_password"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+    restart: unless-stopped
+
+
+volumes:
+  mysql_data:

@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Scan Results - RepoGuard</title>
+
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <style>
+        /* ================================
+           FINDING FILTERS
+        ================================= */
+
+        .finding-filters {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+            margin-bottom: 12px;
+        }
+
+        .filter-label {
+            color: #788592;
+            font-size: 11px;
+            margin-left: 4px;
+        }
+
+        .finding-filters select,
+        .finding-filters input {
+            background: #0d1117;
+            color: #e6edf3;
+            border: 1px solid #303945;
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .finding-filters select {
+            min-width: 150px;
+        }
+
+        .finding-filters input {
+            min-width: 230px;
+            flex: 1;
+        }
+
+        .finding-filters select:focus,
+        .finding-filters input:focus {
+            border-color: #2563eb;
+        }
+
+        .finding-result-count {
+            color: #788592;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        /* ================================
+           SEVERITY BADGES
+        ================================= */
+
+        .severity-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .severity-critical {
+            background: #3b1515;
+            color: #ff8a8a;
+        }
+
+        .severity-high {
+            background: #3b2415;
+            color: #ffad70;
+        }
+
+        .severity-medium {
+            background: #3b3515;
+            color: #e8d66b;
+        }
+
+        .severity-low {
+            background: #152b3b;
+            color: #79b8ff;
+        }
+
+        /* ================================
+           FINDING CONTENT
+        ================================= */
+
+        .finding-title {
+            font-weight: 500;
+            color: #e6edf3;
+        }
+
+        .finding-file {
+            color: #788592;
+            font-size: 11px;
+            overflow-wrap: anywhere;
+        }
+
+        /* ================================
+           RESPONSIVE FILTERS
+        ================================= */
+
+        @media (max-width: 700px) {
+
+            .finding-filters {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .filter-label {
+                margin-left: 0;
+            }
+
+            .finding-filters select,
+            .finding-filters input {
+                width: 100%;
+                min-width: 0;
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="dashboard">
+
+    <!-- =================================
+         SIDEBAR
+    ================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <img
+                src="assets/repoguard-logo.png"
+                alt="RepoGuard"
+            >
+
+            <span>
+                RepoGuard
+            </span>
+
+        </div>
+
+
+        <nav>
+
+            <a
+                href="dashboard.html"
+                class="nav-link"
+            >
+                <span>▦</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="new-scan.html"
+                class="nav-link"
+            >
+                <span>＋</span>
+                New Scan
+            </a>
+
+
+            <a
+                href="scan-history.html"
+                class="nav-link"
+            >
+                <span>◷</span>
+                Scan History
+            </a>
+
+
+            <p class="nav-heading">
+                ANALYSIS
+            </p>
+
+
+            <a
+                href="scan-results.html"
+                class="nav-link active"
+            >
+                <span>🛡</span>
+                Security
+            </a>
+
+
+            <a
+                href="dependencies.html"
+                class="nav-link"
+            >
+                <span>📦</span>
+                Dependencies
+            </a>
+
+
+            <a
+                href="secrets.html"
+                class="nav-link"
+            >
+                <span>🔑</span>
+                Secrets
+            </a>
+
+
+            <a
+                href="cicd.html"
+                class="nav-link"
+            >
+                <span>⚙</span>
+                CI/CD
+            </a>
+
+
+            <a
+                href="code-health.html"
+                class="nav-link"
+            >
+                <span>⌘</span>
+                Code Health
+            </a>
+
+
+            <p class="nav-heading">
+                REPORTS
+            </p>
+
+
+            <a
+                href="ai-report.html"
+                class="nav-link"
+            >
+                <span>✦</span>
+                AI Report
+            </a>
+
+        </nav>
+
+
+        <a
+            href="settings.html"
+            class="nav-link settings"
+        >
+            <span>⚙</span>
+            Settings
+        </a>
+
+    </aside>
+
+
+    <!-- =================================
+         MAIN CONTENT
+    ================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Scan Results
+                </h1>
+
+                <p id="repositorySubtitle">
+                    Repository security analysis
+                </p>
+
+            </div>
+
+
+            <button id="newScanButton">
+                + New Scan
+            </button>
+
+        </header>
+
+
+        <!-- =================================
+             REPOSITORY SUMMARY
+        ================================== -->
+
+        <section class="repository">
+
+            <div>
+
+                <small>
+                    ANALYZED REPOSITORY
+                </small>
+
+
+                <h2 id="repositoryName">
+                    Loading...
+                </h2>
+
+
+                <p id="repositoryUrl">
+                    Loading repository information...
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <small>
+                    OVERALL SCORE
+                </small>
+
+
+                <h2>
+
+                    <span id="overallScore">
+                        --
+                    </span>
+
+                    <small>
+                        /100
+                    </small>
+
+                </h2>
+
+
+                <span id="riskLevel">
+                    --
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             SCORE CARDS
+        ================================== -->
+
+        <section class="score-cards">
+
+
+            <div class="card">
+
+                <p>
+                    Security
+                </p>
+
+
+                <h2 id="securityScore">
+                    --
+                </h2>
+
+
+                <small>
+                    Static security analysis
+                </small>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>
+                    Dependencies
+                </p>
+
+
+                <h2 id="dependencyScore">
+                    --
+                </h2>
+
+
+                <small>
+                    Dependency health
+                </small>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>
+                    Secrets
+                </p>
+
+
+                <h2 id="secretScore">
+                    --
+                </h2>
+
+
+                <small>
+                    Secret safety
+                </small>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>
+                    Code Health
+                </p>
+
+
+                <h2 id="healthScore">
+                    --
+                </h2>
+
+
+                <small>
+                    Repository quality
+                </small>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             FINDING SUMMARY
+        ================================== -->
+
+        <section class="panel">
+
+
+            <div class="panel-title">
+
+                <div>
+
+                    <h3>
+                        Security Findings
+                    </h3>
+
+
+                    <p>
+                        Issues detected during the repository scan
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="findings">
+
+
+                <div>
+
+                    <span>
+                        Critical
+                    </span>
+
+                    <strong id="criticalCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        High
+                    </span>
+
+                    <strong id="highCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Medium
+                    </span>
+
+                    <strong id="mediumCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Low
+                    </span>
+
+                    <strong id="lowCount">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             DETAILED FINDINGS
+        ================================== -->
+
+        <section class="panel recent-scans">
+
+
+            <div class="panel-title">
+
+                <div>
+
+                    <h3>
+                        Detected Issues
+                    </h3>
+
+
+                    <p>
+                        Review and filter security findings
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+
+            <div class="finding-filters">
+
+
+                <label
+                    for="severityFilter"
+                    class="filter-label"
+                >
+                    Severity
+                </label>
+
+
+                <select id="severityFilter">
+
+                    <option value="ALL">
+                        All Severities
+                    </option>
+
+                    <option value="CRITICAL">
+                        Critical
+                    </option>
+
+                    <option value="HIGH">
+                        High
+                    </option>
+
+                    <option value="MEDIUM">
+                        Medium
+                    </option>
+
+                    <option value="LOW">
+                        Low
+                    </option>
+
+                </select>
+
+
+                <label
+                    for="categoryFilter"
+                    class="filter-label"
+                >
+                    Category
+                </label>
+
+
+                <select id="categoryFilter">
+
+                    <option value="ALL">
+                        All Categories
+                    </option>
+
+                </select>
+
+
+                <label
+                    for="findingSearch"
+                    class="filter-label"
+                >
+                    Search findings
+                </label>
+
+
+                <input
+                    type="text"
+                    id="findingSearch"
+                    placeholder="Search findings..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <!-- RESULT COUNT -->
+
+            <div
+                class="finding-result-count"
+                id="findingResultCount"
+            >
+                Loading findings...
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Severity
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Title
+                            </th>
+
+                            <th>
+                                File
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="findingsTableBody">
+
+                        <tr>
+
+                            <td colspan="4">
+                                Loading findings...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- JAVASCRIPT -->
+
+<script src="js/scan-results.js"></script>
+<script src="js/navigation.js"></script>
+</body>
+
+</html>
