@@ -10,6 +10,8 @@
 [![Gitleaks](https://img.shields.io/badge/Secret%20Detection-Gitleaks-red)](https://github.com/gitleaks/gitleaks)
 [![License](https://img.shields.io/badge/License-MIT-green)](#license)
 
+
+🔗 Try the Live Demo — [RepoGuard Dashboard](https://repoguard-frontend.onrender.com/dashboard.html)
 </div>
 
 ---
