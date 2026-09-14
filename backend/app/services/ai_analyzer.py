@@ -1,5 +1,7 @@
 from typing import Any
 
+from app.services.scoring import get_risk_level
+
 
 def build_ai_analysis_data(
     scan: Any,
@@ -24,6 +26,10 @@ def build_ai_analysis_data(
             "secret_score": scan.secret_score,
             "cicd_score": scan.cicd_score,
             "health_score": scan.health_score,
+            # Pre-computed by RepoGuard's own scoring logic.
+            # The AI must use this value as-is rather than
+            # inferring its own risk label from the raw scores.
+            "risk_level": get_risk_level(scan.overall_score),
         },
 
         "security_findings": [
@@ -135,6 +141,13 @@ IMPORTANT RULES:
 6. Do not expose secret values.
 7. Give practical remediation advice.
 8. Keep the explanation understandable for developers.
+9. The field scan.risk_level has already been calculated by
+   RepoGuard's own scoring engine. In the "Overall Risk" section,
+   you MUST state this exact risk level (e.g. "LOW", "MEDIUM",
+   "HIGH", or "CRITICAL") and explain why the scores support it.
+   Do NOT recalculate, rename, soften, or contradict this value
+   under any circumstances — even if the scores seem to suggest
+   a different label to you.
 
 Return the report using these sections:
 
