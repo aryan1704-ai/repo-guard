@@ -1,75 +1,68 @@
-<div align="center">
+# RepoGuard
 
-# RepoGuard — AI-Powered GitHub Repository Security & Code Health Analyzer
+**AI-Powered GitHub Repository Security & Health Analyzer**
 
-**Free, open-source security scanner for GitHub repositories.** Detect vulnerabilities, exposed secrets, insecure CI/CD workflows, and vulnerable dependencies — with AI-generated remediation reports powered by Google Gemini.
+RepoGuard scans any public GitHub repository and produces a structured security and code-quality report. It combines deterministic scanners (static analysis, dependency vulnerability checks, secret detection, CI/CD workflow review, code health metrics) with a transparent scoring system, then uses Google Gemini to turn the raw findings into a clear, human-readable report — grounded strictly in what was actually detected.
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
-[![Semgrep](https://img.shields.io/badge/Static%20Analysis-Semgrep-orange)](https://semgrep.dev/)
-[![Gitleaks](https://img.shields.io/badge/Secret%20Detection-Gitleaks-red)](https://github.com/gitleaks/gitleaks)
-[![License](https://img.shields.io/badge/License-MIT-green)](#license)
-
-
-🔗 Try the Live Demo — [RepoGuard Dashboard](https://repoguard-frontend.onrender.com/dashboard.html)
-</div>
+**🔗 [Try the Live Demo — RepoGuard Dashboard](https://repoguard-frontend.onrender.com/dashboard.html)**
 
 ---
 
-## What is RepoGuard?
+## Features
 
-**RepoGuard** is an AI-powered repository security and health scanner for GitHub. Point it at any public GitHub repository and it runs a full security audit — static code analysis, dependency vulnerability scanning, secret/credential leak detection, GitHub Actions (CI/CD) security review, and code quality metrics — then uses Google Gemini to turn the results into a clear, developer-friendly report.
-
-If you're searching for a **GitHub repository vulnerability scanner**, an **automated code security audit tool**, an **open-source secret scanner**, or a way to **check GitHub Actions workflows for security risks**, RepoGuard covers all of it in a single scan.
-
----
-
-## Key Features
-
-- 🛡 **Static Application Security Testing (SAST)** — powered by [Semgrep](https://semgrep.dev/), detects insecure coding patterns and common vulnerability classes (OWASP-style issues).
-- 📦 **Software Composition Analysis (SCA)** — cross-references your `package.json`, `requirements.txt`, `pyproject.toml`, and `pom.xml` dependencies against the [OSV.dev](https://osv.dev) vulnerability database.
-- 🔑 **Secret & Credential Scanning** — uses [Gitleaks](https://github.com/gitleaks/gitleaks) to catch leaked API keys, tokens, and passwords before they become a breach. Secret values are never stored or exposed.
-- ⚙ **GitHub Actions / CI/CD Security Review** — flags `pull_request_target` misuse, excessive write permissions, unpinned third-party actions, unsafe expression injection, and `curl | bash`-style remote code execution.
-- ⌘ **Code Health & Maintainability Metrics** — README presence, test coverage indicators, dependency hygiene, TODO/FIXME density, oversized files, and language breakdown.
-- ✦ **AI-Generated Security Report** — Google Gemini synthesizes every finding into an executive summary, risk breakdown, and prioritized remediation plan, strictly grounded in real scan data (no hallucinated vulnerabilities).
-- 📊 **Transparent Weighted Scoring** — a single 0–100 Overall Score, broken down by category, so you can track repository security posture over time.
-
----
-
-## Why Use RepoGuard?
-
-Most GitHub security tools do only one job — a linter, a dependency checker, or a secret scanner — forcing teams to stitch together multiple tools and dashboards. RepoGuard combines the essential categories of repository security (code, dependencies, secrets, CI/CD, and code health) into one scan with one unified score, making it a practical **all-in-one GitHub security and DevSecOps tool** for developers, students, security researchers, and open-source maintainers who want a fast security baseline without an enterprise price tag.
+| Area | What it checks |
+|---|---|
+| 🛡 **Security (Static Analysis)** | Scans source code with Semgrep to detect risky patterns and common vulnerability classes. |
+| 📦 **Dependencies** | Parses `package.json`, `requirements.txt`, `pyproject.toml`, and `pom.xml`, then checks each dependency against the [OSV.dev](https://osv.dev) vulnerability database. |
+| 🔑 **Secrets** | Uses [Gitleaks](https://github.com/gitleaks/gitleaks) to detect potentially exposed API keys, tokens, and credentials. Secret *values* are never stored or displayed — only type, location, and severity. |
+| ⚙ **CI/CD Security** | Analyzes GitHub Actions workflows for risks such as `pull_request_target` misuse, excessive `contents: write` permissions, unpinned actions, unsafe expression interpolation, and remote script execution (`curl \| bash`). |
+| ⌘ **Code Health** | Measures repository size, language breakdown, test coverage indicators, README presence, dependency file presence, TODO/FIXME density, and oversized files. |
+| ✦ **AI Report** | Sends only the scan's own findings to Gemini, which is explicitly instructed not to invent issues, and returns a structured report: Executive Summary, Overall Risk, Top Security Risks, Dependency Risks, Secret Summary, CI/CD Security, Code Health, and Recommended Actions. |
 
 ---
 
 ## How Scoring Works
 
-Each category is scored 0–100 based on finding severity:
+Each category produces a score from 0–100, based on the severity mix of its findings:
 
 ```
 penalty = (critical × 25) + (high × 15) + (medium × 7) + (low × 2)
-score   = 100 - penalty
+score   = 100 - penalty   (clamped between 0 and 100)
 ```
 
-**Overall Score** is a weighted average:
+The **Overall Score** is a weighted average:
 
 | Category | Weight |
 |---|---|
-| Security (SAST) | 35% |
-| Dependencies (SCA) | 20% |
+| Security | 35% |
+| Dependencies | 20% |
 | Secrets | 20% |
 | CI/CD | 15% |
 | Code Health | 10% |
 
-**Risk levels:** `LOW` (90+) · `MEDIUM` (75–89) · `HIGH` (50–74) · `CRITICAL` (<50)
+Risk levels: `LOW` (90+), `MEDIUM` (75–89), `HIGH` (50–74), `CRITICAL` (<50).
 
 ---
 
 ## Tech Stack
 
-**Backend:** FastAPI · SQLAlchemy · MySQL · GitPython · Semgrep · Gitleaks · OSV API · Google Gemini API
-**Frontend:** HTML5 · CSS3 · Vanilla JavaScript (no framework, no build step)
-**Deployment:** Render (Web Service + Static Site)
+**Backend**
+- [FastAPI](https://fastapi.tiangolo.com/) — REST API
+- [SQLAlchemy](https://www.sqlalchemy.org/) + MySQL — persistence
+- [GitPython](https://gitpython.readthedocs.io/) — shallow repository cloning
+- [Semgrep](https://semgrep.dev/) — static analysis
+- [Gitleaks](https://github.com/gitleaks/gitleaks) — secret detection
+- [OSV API](https://osv.dev/) — dependency vulnerability lookups
+- [Google Gemini API](https://ai.google.dev/) — AI-generated report synthesis
+- `httpx` — async HTTP client for GitHub/OSV calls
+
+**Frontend**
+- Plain HTML / CSS / JavaScript (no build step, no framework)
+- Deployed as a static site
+
+**Deployment**
+- Backend: Render Web Service
+- Frontend: Render Static Site
 
 ---
 
@@ -79,15 +72,15 @@ score   = 100 - penalty
 repo-guard/
 ├── backend/
 │   └── app/
-│       ├── api/            # FastAPI routers: repositories, scans, ai_report
+│       ├── api/            # FastAPI routers (repositories, scans, ai_report)
 │       ├── core/           # Database engine & settings
 │       ├── models/         # SQLAlchemy models
-│       └── services/       # Scanners, scoring engine, AI integration
-│       └── main.py
+│       └── services/       # Scanners, scoring, AI integration
+│       └── main.py         # FastAPI app entrypoint
 └── frontend/
-    ├── *.html
+    ├── *.html              # Dashboard, scan, results, reports pages
     ├── css/
-    └── js/
+    └── js/                 # Per-page API calls to the backend
 ```
 
 ---
@@ -95,90 +88,85 @@ repo-guard/
 ## Getting Started
 
 ### Prerequisites
+
 - Python 3.10+
 - MySQL database
-- [Semgrep](https://semgrep.dev/docs/getting-started/) and [Gitleaks](https://github.com/gitleaks/gitleaks#installing) on your `PATH`
-- A [Google Gemini API key](https://aistudio.google.com/apikey)
+- [Semgrep](https://semgrep.dev/docs/getting-started/) and [Gitleaks](https://github.com/gitleaks/gitleaks#installing) installed and available on `PATH`
+- A [Gemini API key](https://aistudio.google.com/apikey)
 
-### Backend
+### Backend Setup
 
 ```bash
 cd backend
 pip install -r requirements.txt
 ```
 
-Set environment variables:
+Create a `.env` file (or set these as environment variables):
 
 | Variable | Description |
 |---|---|
-| `DATABASE_URL` | e.g. `mysql+pymysql://user:pass@host/dbname` |
-| `GEMINI_API_KEY` | Your Gemini API key |
-| `GEMINI_MODEL` | e.g. `gemini-2.5-flash` |
+| `DATABASE_URL` | MySQL connection string, e.g. `mysql+pymysql://user:pass@host/dbname` |
+| `GEMINI_API_KEY` | Your Google Gemini API key |
+| `GEMINI_MODEL` | Gemini model name to use, e.g. `gemini-2.5-flash` |
 
-Run it:
+Run the API:
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-API docs: `http://127.0.0.1:8000/docs` · Health check: `/api/health`
+The API will be available at `http://127.0.0.1:8000`, with interactive docs at `/docs` and a health check at `/api/health`.
 
-### Frontend
+### Frontend Setup
 
-Static HTML/CSS/JS — no build step. Set `API_URL` in each file under `frontend/js/` to your backend URL, then serve `frontend/` from any static host (Render, Netlify, Vercel, GitHub Pages, etc.).
+The frontend is static — no build step required. Open `frontend/js/*.js` and set `API_URL` (or `API_BASE_URL` in `ai-report.js`) to your backend's URL, then serve the `frontend/` folder with any static file host (or open `dashboard.html` directly for local testing against a local backend).
 
 ---
 
-## API Reference
+## Core API Endpoints
 
-| Method | Endpoint | Description |
+| Method | Endpoint | Purpose |
 |---|---|---|
-| `POST` | `/api/repositories/?repository_url=...` | Register a repository for scanning |
-| `POST` | `/api/scans/?repository_id=...` | Start a new security scan |
+| `POST` | `/api/repositories/?repository_url=...` | Register a GitHub repository for scanning |
+| `POST` | `/api/scans/?repository_id=...` | Start a new scan |
 | `GET` | `/api/scans/` | List all scans |
-| `GET` | `/api/scans/{id}` | Scan details and scores |
-| `GET` | `/api/scans/{id}/status` | Scan progress polling |
+| `GET` | `/api/scans/{id}` | Get scan details and scores |
+| `GET` | `/api/scans/{id}/status` | Poll scan progress |
 | `GET` | `/api/scans/{id}/findings` | Static analysis findings |
-| `GET` | `/api/scans/{id}/dependencies` | Dependency vulnerability results |
+| `GET` | `/api/scans/{id}/dependencies` | Dependency scan results |
 | `GET` | `/api/scans/{id}/secrets` | Detected secrets (metadata only) |
 | `GET` | `/api/scans/{id}/cicd` | CI/CD workflow findings |
 | `GET` | `/api/scans/{id}/health` | Code health metrics |
-| `GET` | `/api/scans/{id}/ai-report` | AI-generated security report |
-| `GET` | `/api/health` | Backend & database health check |
+| `GET` | `/api/scans/{id}/ai-report` | AI-generated narrative report |
+| `GET` | `/api/health` | Backend + database health check |
 
 ---
 
-## Security & Privacy
+## Security & Privacy Notes
 
-- Repositories are cloned to a temporary directory and deleted immediately after scanning — no code is retained.
-- Secret **values** are never stored, logged, or returned by the API — only type, file, line number, and severity.
-- Scanned code is never executed.
-- Currently supports public GitHub repositories.
+- Repositories are cloned to a temporary directory and deleted immediately after scanning.
+- Secret *values* are never stored, logged, or returned by the API — only their type, file, line number, and severity.
+- No code from analyzed repositories is executed.
+- Currently supports public GitHub repositories only.
 
 ---
 
-## Roadmap
+## Roadmap Ideas
 
-- [ ] Private repository support via GitHub OAuth
-- [ ] GitLab and Bitbucket support
-- [ ] Exportable PDF security reports
-- [ ] Scheduled re-scans with historical trend tracking
-- [ ] Additional dependency ecosystems (Go modules, Cargo, etc.)
+- [ ] Support private repositories via GitHub OAuth
+- [ ] Support GitLab / Bitbucket
+- [ ] PDF/exportable report generation
+- [ ] Scheduled re-scans and diffing between scans
+- [ ] Support additional dependency ecosystems (Go modules, Cargo, etc. beyond current parsing)
 
 ---
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome — check the [issues page](../../issues) to get started. If you find RepoGuard useful, consider giving the repo a ⭐ — it helps others discover the project.
-
----
-
-## Keywords
-
-`github security scanner` · `repository vulnerability scanner` · `AI code security analysis` · `secret detection tool` · `dependency vulnerability checker` · `CI/CD security scanner` · `github actions security` · `open source SAST tool` · `code health analyzer` · `DevSecOps automation`
+Issues and pull requests are welcome. If you're proposing a significant change, please open an issue first to discuss what you'd like to change.
 
 ---
 
 ## License
 
-*(Add your chosen license here — e.g. MIT, Apache 2.0. Search engines and GitHub both surface license info, so don't skip this.)*
+This project is licensed under the [MIT License](LICENSE).
